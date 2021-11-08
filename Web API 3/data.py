@@ -53,7 +53,6 @@ def get_metacritic_scores_by_name(name):
     return get_metacritic_metascore_by_name(name)+","+get_metacritic_userscore_by_name(name)
 
 # Steam Methods
-
 def get_steam_url_by_name(name):
     col_name = steam_cols.index("name")
     col_url = steam_cols.index("url")
@@ -84,20 +83,6 @@ def get_steam_original_price_by_name(name):
     
     return None    
 
-
-def get_steam_mature_content_rating_by_name(name):
-    col_name = steam_cols.index("name")
-    col_mature = steam_cols.index("mature_content")
-
-    for row in metacritic_rows:
-        if row[col_name] == name:
-            return str(row[col_mature])
-    
-    return None    
-
-
+# Combined Methods
 def get_all_reviews_by_name(name):
     return get_metacritic_metascore_by_name(name)+","+get_metacritic_userscore_by_name(name)+","+get_all_reviews_by_name(name)
-
-
-print(get_metacritic_meta_and_user_scores_by_name("DOOM"))

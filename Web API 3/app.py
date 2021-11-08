@@ -23,6 +23,14 @@ def get_review_by_name(source, name):
     elif source == "steam_all_reviews":
         return data.get_steam_all_reviews_by_name(name)
 
+@app.route("/steam/<info>/<name>")
+def get_steam_info_by_name(info, name):
+    print(info, name)
+    if info == "url":
+        return data.get_steam_url_by_name(name)
+    elif info == "original_price":
+        return data.get_steam_original_price_by_name(name)
+
 # Run
 if __name__ == "__main__":
     app.run(host="localhost", port=7777)
