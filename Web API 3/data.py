@@ -25,35 +25,32 @@ def parse_data():
         for row in reader:
             steam_rows.append(row)
 
-    # print(metacritic_cols)
-    print(steam_cols)
-
 parse_data()
 
 # Metacritic methods
-def get_metascore_by_name(name):
+def get_metacritic_metascore_by_name(name):
     col_name = metacritic_cols.index("name")
     col_metascore = metacritic_cols.index("metascore")
 
     for row in metacritic_rows:
         if row[col_name] == name:
-            return row[col_metascore]
+            return str(row[col_metascore])
 
-    return -1
+    return None
 
-def get_userscore_by_name(name):
+def get_metacritic_userscore_by_name(name):
     col_name = metacritic_cols.index("name")
     col_userscore = metacritic_cols.index("userscore")
 
     for row in metacritic_rows:
         if row[col_name] == name:
-            return row[col_userscore]
+            return str(row[col_userscore])
 
-    return -1
+    return None
 
-def get_meta_and_user_scores_by_name(name):
+def get_metacritic_scores_by_name(name):
 
-    return get_metascore_by_name(name), get_userscore_by_name(name)
+    return get_metacritic_metascore_by_name(name)+","+get_metacritic_userscore_by_name(name)
 
 # Steam Methods
 
@@ -63,9 +60,9 @@ def get_steam_url_by_name(name):
 
     for row in steam_rows:
         if row[col_name] == name:
-            return row[col_url]
+            return str(row[col_url])
     
-    return -1
+    return None
 
 def get_steam_all_reviews_by_name(name):
     col_name = steam_cols.index("name")
@@ -73,9 +70,9 @@ def get_steam_all_reviews_by_name(name):
 
     for row in steam_rows:
         if row[col_name] == name:
-            return row[col_reviews]
+            return str(row[col_reviews])
     
-    return -1
+    return None
 
 def get_steam_original_price_by_name(name):
     col_name = steam_cols.index("name")
@@ -83,9 +80,9 @@ def get_steam_original_price_by_name(name):
 
     for row in steam_rows:
         if row[col_name] == name:
-            return row[col_price]
+            return str(row[col_price])
     
-    return -1    
+    return None    
 
 
 def get_steam_mature_content_rating_by_name(name):
@@ -94,11 +91,13 @@ def get_steam_mature_content_rating_by_name(name):
 
     for row in metacritic_rows:
         if row[col_name] == name:
-            return row[col_mature]
+            return str(row[col_mature])
     
-    return -1    
+    return None    
 
-print(get_steam_mature_content_rating_by_name("Portal 2"))
-print(get_steam_all_reviews_by_name("Portal 2"))
-print(get_steam_url_by_name("Portal 2"))
-print(get_steam_original_price_by_name("Portal 2"))
+
+def get_all_reviews_by_name(name):
+    return get_metacritic_metascore_by_name(name)+","+get_metacritic_userscore_by_name(name)+","+get_all_reviews_by_name(name)
+
+
+print(get_metacritic_meta_and_user_scores_by_name("DOOM"))
