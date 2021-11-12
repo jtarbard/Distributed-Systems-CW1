@@ -13,7 +13,7 @@ def hello_world():
 def get_review_by_name(source, name):
     print(source, name)
     if source == "all":
-        data.get_all_reviews_by_name(name)
+        return data.get_all_reviews_by_name(name)
     elif source == "metacritic_metascore":
         return data.get_metacritic_metascore_by_name(name)
     elif source == "metacritic_userscore":
@@ -33,4 +33,4 @@ def get_steam_info_by_name(info, name):
 
 # Run
 if __name__ == "__main__":
-    app.run(host="localhost", port=7777)
+    app.run(host="0.0.0.0", port=7777)

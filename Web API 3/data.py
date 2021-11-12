@@ -7,6 +7,9 @@ metacritic_rows = []
 steam_cols = []
 steam_rows = []
 
+client_cols = []
+client_rows = []
+
 def parse_data():
     global metacritic_cols, metacritic_rows
     global steam_cols, steam_rows
@@ -22,6 +25,12 @@ def parse_data():
     with open("steam_games.csv") as csv_file:
         reader = csv.reader(csv_file, delimiter=',')
         steam_cols = next(reader)
+        for row in reader:
+            steam_rows.append(row)
+
+    with open("client_games.csv") as csv_file:
+        reader = csv.reader(csv_file, delimiter=",")
+        client_cols = next(reader)
         for row in reader:
             steam_rows.append(row)
 
@@ -83,6 +92,29 @@ def get_steam_original_price_by_name(name):
     
     return None    
 
-# Combined Methods
-def get_all_reviews_by_name(name):
-    return get_metacritic_metascore_by_name(name)+","+get_metacritic_userscore_by_name(name)+","+get_all_reviews_by_name(name)
+# Client Methods
+#review_id,user_id,game,comment,score
+def get_client_scores_by_name(name):
+
+
+def get_client_comments_by_name(name):
+
+
+def get_client_score_by_name_and_user_id(name, user_id):
+
+
+def get_client_comment_by_name_and_user_id(name, user_id):
+
+
+def post_client_review(name, user_id, comment, score):
+
+
+def update_client_comment_by_name_and_user_id(name, user_id, comment):
+
+
+def update_client_score_by_name_and_user_id(name, user_id, score):
+
+
+def delete_client_review_by_name_and_user_id(name, user_id):
+
+
