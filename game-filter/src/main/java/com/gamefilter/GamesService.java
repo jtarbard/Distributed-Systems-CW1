@@ -25,8 +25,8 @@ public class GamesService {
         return headerEntity;
     }
 
-    // from a list of objects that implement the hasTitle interface, extracts only the list of titles,
-    // potentially sorted in alphabetical order
+    // GIVEN a list of objects that implement the hasTitle interface,
+    // Extracts only the list of titles, potentially sorted in alphabetical order
     public <T extends hasTitle> List<String> getTitles(List<T> oList, boolean filterFlag) {
         List<String> titles = new LinkedList<>();
         for (int i=0; i < oList.size(); i++) {
@@ -55,22 +55,29 @@ public class GamesService {
         return uniqueGenres;
     }
 
-    public List<GameNews> getFilteredNews(List<GameNews> news, List<Game> games) {
-        List<String> gameTitles = getTitles(games,false);
-        List<String> newsTitles = getTitles(news, false);
 
-        List<GameNews> filteredNews = new LinkedList<>();
-        for (int i=0; i < newsTitles.size(); i++) {
-            String theNewsTitle = newsTitles.get(i);
+    // given a list of objects of generic type that implement a title parameter,
+    // returns the list of objects filtered by titles found in a list of games
+    public <T extends hasTitle> List<T> getFilteredList(List<T> listToFilter, List<Game> games) {
+        List<String> gameTitles = getTitles(games,false);
+        List<String> listTitles = getTitles(listToFilter, false);
+
+        // creates a new list to contain the filtered objects
+        List<T> filteredList = new LinkedList<>();
+        // goes through each object's title
+        for (int i=0; i < listTitles.size(); i++) {
+            String theListTitle = listTitles.get(i);
+            // goes through each game title
             for (int j=0; j < gameTitles.size(); j++) {
+                // when a matching title is found, the object is added to the filtered list
                 String theGameTitle = gameTitles.get(j);
-                if (theNewsTitle.contains(theGameTitle)) {
-                    filteredNews.add(news.get(i));
+                if (theListTitle.contains(theGameTitle)) {
+                    filteredList.add(listToFilter.get(i));
                     break;
                 }
             }
         }
 
-        return filteredNews;
+        return filteredList;
     }
 }

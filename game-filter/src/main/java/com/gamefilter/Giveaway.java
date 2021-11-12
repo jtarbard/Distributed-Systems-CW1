@@ -2,18 +2,20 @@ package com.gamefilter;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class GameNews implements hasTitle{
+public class Giveaway implements hasTitle{
     private int id;
     private String title;
-    @JsonProperty("short_description")
-    private String shortDescription;
+    @JsonProperty("keys_left")
+    private String keysLeft;
     private String thumbnail;
     @JsonProperty("main_image")
     private String mainImage;
-    @JsonProperty("article_content")
-    private String articleContent;
-    @JsonProperty("article_url")
-    private String articleUrl;
+    @JsonProperty("short_description")
+    private String shortDescription;
+    @JsonProperty("giveaway_url")
+    private String giveawayUrl;
+
+    public Giveaway() {}
 
     public int getId() {
         return id;
@@ -23,8 +25,9 @@ public class GameNews implements hasTitle{
         return title;
     }
 
-    public String getShortDescription() {
-        return shortDescription;
+
+    public String getKeysLeft() {
+        return keysLeft;
     }
 
     public String getThumbnail() {
@@ -35,12 +38,12 @@ public class GameNews implements hasTitle{
         return mainImage;
     }
 
-    public String getArticleContent() {
-        return articleContent;
+    public String getShortDescription() {
+        return shortDescription;
     }
 
-    public String getArticleUrl() {
-        return articleUrl;
+    public String getGiveawayUrl() {
+        return giveawayUrl;
     }
 
     public void setTitle(String title) {
