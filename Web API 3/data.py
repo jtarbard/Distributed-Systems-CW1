@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime
 
 # CSV storage
 metacritic_cols = []
@@ -36,85 +37,110 @@ def parse_data():
 
 parse_data()
 
+# Metacritic columns, all columns included
+metacritic_metascore_index = metacritic_cols.index("metascore")
+metacritic_name_index = metacritic_cols.index("name")
+metacritic_console_index = metacritic_cols.index("console")
+metacritic_userscore_index = metacritic_cols.index("userscore")
+metacritic_date_index = metacritic_cols.index("date")
+
 # Metacritic methods
 def get_metacritic_metascore_by_name(name):
-    col_name = metacritic_cols.index("name")
-    col_metascore = metacritic_cols.index("metascore")
 
     for row in metacritic_rows:
-        if row[col_name] == name:
-            return str(row[col_metascore])
+        if row[metacritic_name_index] == name:
+            return str(row[metacritic_metascore_index])
+
+    return None
+
+def get_metacritic_console_by_name(name):
+
+    for row in metacritic_rows:
+        if row[metacritic_name_index] == name:
+            return str(row[metacritic_console_index])
 
     return None
 
 def get_metacritic_userscore_by_name(name):
-    col_name = metacritic_cols.index("name")
-    col_userscore = metacritic_cols.index("userscore")
 
     for row in metacritic_rows:
-        if row[col_name] == name:
-            return str(row[col_userscore])
+        if row[metacritic_name_index] == name:
+            return str(row[metacritic_userscore_index])
 
     return None
 
-def get_metacritic_scores_by_name(name):
+def get_metacritic_date_by_name(name):
 
-    return get_metacritic_metascore_by_name(name)+","+get_metacritic_userscore_by_name(name)
+    for row in metacritic_rows:
+        if row[metacritic_name_index] == name:
+            return str(row[metacritic_date_index])
+
+    return None
+
+def get_metacritic_all_by_name(name):
+
+    for row in metacritic_rows:
+        if row[metacritic_name_index] == name:
+            return row
+
+# Steam columns, only select columns included
+steam_url_index = steam_cols.index("url")
+steam_name_index = steam_cols.index("name")
+steam_all_reviews_index = steam_cols.index("all_reviews")
+steam_popular_tags_index = steam_cols.index("popular_tags")
+steam_original_price_index = steam_cols.index("original_price")
 
 # Steam Methods
 def get_steam_url_by_name(name):
-    col_name = steam_cols.index("name")
-    col_url = steam_cols.index("url")
 
     for row in steam_rows:
-        if row[col_name] == name:
-            return str(row[col_url])
+        if row[steam_name_index] == name:
+            return str(row[steam_url_index])
     
     return None
 
 def get_steam_all_reviews_by_name(name):
-    col_name = steam_cols.index("name")
-    col_reviews = steam_cols.index("all_reviews")
 
     for row in steam_rows:
-        if row[col_name] == name:
-            return str(row[col_reviews])
+        if row[steam_name_index] == name:
+            return str(row[steam_all_reviews_index])
+    
+    return None
+
+def get_steam_popular_tags_by_name(name):
+
+    for row in steam_rows:
+        if row[steam_name_index] == name:
+            return str(row[steam_popular_tags_index])
     
     return None
 
 def get_steam_original_price_by_name(name):
-    col_name = steam_cols.index("name")
-    col_price = steam_cols.index("original_price")
 
     for row in steam_rows:
-        if row[col_name] == name:
-            return str(row[col_price])
+        if row[steam_name_index] == name:
+            return str(row[steam_original_price_index])
     
     return None    
 
+# Client colums, all columns included
+client_review_id_index = client_cols.index("review_id")
+# where 'review' encompases all columns below
+client_user_id_index = client_cols.index("user_id")
+client_name_index = client_cols.index("name")
+client_comment_index = client_cols.index("comment")
+cleint_score_index = client_cols.index("score")
+client_date_index = client_cols.index("date")
+
 # Client Methods
-#review_id,user_id,game,comment,score
-def get_client_scores_by_name(name):
+def get_client_reviews_by_user_id(user_id):
 
+def get_client_reviews_by_user_id_and_name(user_id, name):
 
-def get_client_comments_by_name(name):
+def get_client_reviews_by_name(name):
 
+def post_client_review(user_id, name, comment, score):
 
-def get_client_score_by_name_and_user_id(name, user_id):
+def update_client_review(review_id, user_id, comment, score):
 
-
-def get_client_comment_by_name_and_user_id(name, user_id):
-
-
-def post_client_review(name, user_id, comment, score):
-
-
-def update_client_comment_by_name_and_user_id(name, user_id, comment):
-
-
-def update_client_score_by_name_and_user_id(name, user_id, score):
-
-
-def delete_client_review_by_name_and_user_id(name, user_id):
-
-
+def delete_client_review(review_id, user_id):
