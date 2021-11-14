@@ -134,13 +134,70 @@ client_date_index = client_cols.index("date")
 
 # Client Methods
 def get_client_reviews_by_user_id(user_id):
+    tmp = []
+
+    for row in client_rows:
+        if row[client_user_id_index] == user_id:
+            tmp.append(row)
+    
+    return tmp
 
 def get_client_reviews_by_user_id_and_name(user_id, name):
+    tmp = []
+
+    for row in client_rows:
+        if row[client_user_id_index] == user_id and row[client_name_index] == name:
+            tmp.append(row)
+    
+    return tmp
 
 def get_client_reviews_by_name(name):
+    tmp = []
+
+    for row in client_rows:
+        if row[client_name_index] == name:
+            tmp.append(row)
+    
+    return tmp
+
+def get_client_review_score_by_name(name):
+    score = None, count = 0
+
+    for row in client_rows:
+        if row[client_name_index] == name:
+            score=+row[score]
+    
+    if score == None:
+        return None
+    else:
+        return score/count
 
 def post_client_review(user_id, name, comment, score):
+    #TODO: create validation
+    try:
+        client_rows.append(client_rows[-1]+1, user_id, name, comment, score, datetime.now())
+        return True
+    except:
+        return False
 
 def update_client_review(review_id, user_id, comment, score):
+    try:
+        for row in client_rows:
+            if row[client_review_id_index] == review_id and row[client_user_id_index] == user_id:
+                row[client_comment_index] = comment
+                row[cleint_score_index] = score
+                row[client_date_index] = datetime.now()
+                return True
+        return False
+    except:
+        return False
 
 def delete_client_review(review_id, user_id):
+    try:
+        for row in client_rows:
+            if row[client_review_id_index] == review_id and row[client_user_id_index] == user_id:
+                row.remove()
+                return True
+        return False
+    except:
+        return False
