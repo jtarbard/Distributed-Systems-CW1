@@ -1,5 +1,5 @@
 from os import error
-from flask import Flask
+from flask import Flask, request
 import data
 
 app = Flask(__name__)
@@ -14,7 +14,9 @@ def hello_world():
 
 @app.route("/metacritic/<name>/<column>", methods = ["GET"])
 def metacritic(name, column):
-    if column is None:
+
+    print("Name: "+name, "Column: "+ column)
+    if column is "all":
         return data.get_metacritic_all_by_name(name)
     elif column in data.metacritic_cols:
         if column == "metascore":
@@ -30,10 +32,12 @@ def metacritic(name, column):
 
 @app.route("/steam/<name>/<column>", methods = ["GET"])
 def steam(name, column):
+
+    print("Name: "+ name, "Column: "+ column)
     if column in data.steam_cols:
         if column == "url":
             return data.get_steam_url_by_name(name)
-        elif column == "all_reveiws":
+        elif column == "all_reviews":
             return data.get_steam_all_reviews_by_name(name)
         elif column == "popular_tags":
             return data.get_steam_popular_tags_by_name(name)
