@@ -161,7 +161,8 @@ def get_client_reviews_by_name(name):
     return tmp
 
 def get_client_review_score_by_name(name):
-    score = None, count = 0
+    score = None
+    count = 0
 
     for row in client_rows:
         if row[client_name_index] == name:

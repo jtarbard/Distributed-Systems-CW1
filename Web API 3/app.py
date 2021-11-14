@@ -1,3 +1,4 @@
+from os import error
 from flask import Flask
 import data
 
@@ -9,27 +10,40 @@ data.parse_data()
 def hello_world():
     return "Hello World"
 
-@app.route("/review/<source>/<name>")
-def get_review_by_name(source, name):
-    print(source, name)
-    if source == "all":
-        return data.get_all_reviews_by_name(name)
-    elif source == "metacritic_metascore":
-        return data.get_metacritic_metascore_by_name(name)
-    elif source == "metacritic_userscore":
-        return data.get_metacritic_userscore_by_name(name)
-    elif source == "all_metacritic":
-        return data.get_metacritic_scores_by_name(name)
-    elif source == "steam_all_reviews":
-        return data.get_steam_all_reviews_by_name(name)
+#improved routes
 
-@app.route("/steam/<info>/<name>")
-def get_steam_info_by_name(info, name):
-    print(info, name)
-    if info == "url":
-        return data.get_steam_url_by_name(name)
-    elif info == "original_price":
-        return data.get_steam_original_price_by_name(name)
+@app.route("/metacritic/<name>/<column>", methods = ["GET"])
+def metacritic(name, column):
+    if column is None:
+        return data.get_metacritic_all_by_name(name)
+    elif column in data.metacritic_cols:
+        if column == "metascore":
+            return data.get_metacritic_metascore_by_name(name)
+        elif column == "console":
+            return data.get_metacritic_console_by_name(name)
+        elif column == "userscore":
+            return data.get_metacritic_userscore_by_name(name)
+        elif column == "date":
+            return data.get_metacritic_date_by_name(name)
+    else:
+        return False
+
+@app.route("/steam/<name>/<column>", methods = ["GET"])
+def steam(name, column):
+    if column in data.steam_cols:
+        if column == "url":
+            return data.get_steam_url_by_name(name)
+        elif column == "all_reveiws":
+            return data.get_steam_all_reviews_by_name(name)
+        elif column == "popular_tags":
+            return data.get_steam_popular_tags_by_name(name)
+        elif column == "original_price":
+            return data.get_steam_original_price_by_name(name)
+
+    else:
+        return False
+
+# @app.route("/client/", methods = ["GET", "POST"])
 
 # Run
 if __name__ == "__main__":
