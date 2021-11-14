@@ -1,4 +1,5 @@
 from os import error
+from types import MethodType
 from flask import Flask, request
 import data
 
@@ -15,7 +16,6 @@ def hello_world():
 @app.route("/metacritic/<name>/<column>", methods = ["GET"])
 def metacritic(name, column):
 
-    print("Name: "+name, "Column: "+ column)
     if column is "all":
         return data.get_metacritic_all_by_name(name)
     elif column in data.metacritic_cols:
@@ -33,7 +33,6 @@ def metacritic(name, column):
 @app.route("/steam/<name>/<column>", methods = ["GET"])
 def steam(name, column):
 
-    print("Name: "+ name, "Column: "+ column)
     if column in data.steam_cols:
         if column == "url":
             return data.get_steam_url_by_name(name)
@@ -47,8 +46,14 @@ def steam(name, column):
     else:
         return False
 
-# @app.route("/client/", methods = ["GET", "POST"])
+@app.route("/client/", methods = ["GET", "POST"])
+def client():
+    if request.method == "GET":
+        return 0
+    else:
+        return 0
 
+    
 # Run
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=7777)
