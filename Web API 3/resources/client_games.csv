@@ -1,1 +1,2 @@
-review_id,user_id,name,comment,score,date
+user_id,name,comment,score,date
+0, DOOM, "Nice game.", 10, Null
