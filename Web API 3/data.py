@@ -17,20 +17,20 @@ def parse_data():
     global client_cols, client_rows
 
     # Parse metacritic CSV into storage
-    with open("resources/metacritic_games.csv") as csv_file:
+    with open("Web API 3/resources/metacritic_games.csv") as csv_file:
         reader = csv.reader(csv_file, delimiter=',')
         metacritic_cols = next(reader)
         for row in reader:
             metacritic_rows.append(row)
 
     # Parse steam CSV into storage
-    with open("resources/steam_games.csv") as csv_file:
+    with open("Web API 3/resources/steam_games.csv") as csv_file:
         reader = csv.reader(csv_file, delimiter=',')
         steam_cols = next(reader)
         for row in reader:
             steam_rows.append(row)
 
-    with open("resources/client_games.csv") as csv_file:
+    with open("Web API 3/resources/client_games.csv") as csv_file:
         reader = csv.reader(csv_file, delimiter=",")
         client_cols = next(reader)
         for row in reader:
@@ -38,89 +38,23 @@ def parse_data():
 
 parse_data()
 
-# Metacritic columns, all columns included
-metacritic_metascore_index = metacritic_cols.index("metascore")
-metacritic_name_index = metacritic_cols.index("name")
-metacritic_console_index = metacritic_cols.index("console")
-metacritic_userscore_index = metacritic_cols.index("userscore")
-metacritic_date_index = metacritic_cols.index("date")
-
 # Metacritic methods
-def get_metacritic_metascore_by_name(name):
 
+def get_metacritic_by_name(name):
+    metacritic_name_index = metacritic_cols.index("name")
+    
     for row in metacritic_rows:
-        if row[metacritic_name_index]== name:
-            return str(row[metacritic_metascore_index])
-
-    return None
-
-def get_metacritic_console_by_name(name):
-
-    for row in metacritic_rows:
-        if row[metacritic_name_index]== name:
-            return str(row[metacritic_console_index])
-
-    return None
-
-def get_metacritic_userscore_by_name(name):
-
-    for row in metacritic_rows:
-        if row[metacritic_name_index]== name:
-            return str(row[metacritic_userscore_index])
-
-    return None
-
-def get_metacritic_date_by_name(name):
-
-    for row in metacritic_rows:
-        if row[metacritic_name_index]== name:
-            return str(row[metacritic_date_index])
-
-    return None
-
-def get_metacritic_all_by_name(name):
-
-    for row in metacritic_rows:
-        if row[metacritic_name_index]== name:
+        if row[metacritic_name_index].lower() == name.lower():
             return row
 
-# Steam columns, only select columns included
-steam_url_index = steam_cols.index("url")
-steam_name_index = steam_cols.index("name")
-steam_all_reviews_index = steam_cols.index("all_reviews")
-steam_popular_tags_index = steam_cols.index("popular_tags")
-steam_original_price_index = steam_cols.index("original_price")
 
 # Steam Methods
-def get_steam_url_by_name(name):
-
-    for row in steam_rows:
-        if row[steam_name_index]== name:
-            return str(row[steam_url_index])
-    
-    return None
-
-def get_steam_all_reviews_by_name(name):
-
-    for row in steam_rows:
-        if row[steam_name_index]== name:
-            return str(row[steam_all_reviews_index])
-    
-    return None
-
-def get_steam_popular_tags_by_name(name):
-
-    for row in steam_rows:
-        if row[steam_name_index]== name:
-            return str(row[steam_popular_tags_index])
-    
-    return None
-
 def get_steam_original_price_by_name(name):
+    steam_name_index = steam_cols.index("name")
 
     for row in steam_rows:
-        if row[steam_name_index]== name:
-            return str(row[steam_original_price_index])
+        if row[steam_name_index].lower() == name.lower():
+            return row
     
     return None    
 
