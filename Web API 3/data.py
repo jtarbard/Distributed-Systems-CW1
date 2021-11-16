@@ -15,7 +15,7 @@ client_rows = []
 def parse_metacritic():
     global metacritic_cols, metacritic_rows
 
-    with open("resources/metacritic_games.csv") as csv_file:
+    with open("resources/metacritic_games.csv", encoding="utf8") as csv_file:
         reader = csv.reader(csv_file, delimiter=',')
         metacritic_cols = next(reader)
         metacritic_rows.clear()
