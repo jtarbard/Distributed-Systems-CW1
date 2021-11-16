@@ -347,9 +347,8 @@ const postClient = async(name) => {
     return {data, status};
 }
 
-const renderGame = async(name,genre) => {
+const renderGame = async(name, img) => {
 
-    /*
     steamData = await fetchSteam(name);
     console.log(steamData);
     metacriticData = await fetchMetacritic(name);
@@ -358,10 +357,10 @@ const renderGame = async(name,genre) => {
     console.log(clientData);
 
     document.getElementById("gameName").innerText = name;
+    document.getElementById("cover").src = img
     document.getElementById("desc").innerText = metacriticData.data.summary;
     document.getElementById("price").innerText = steamData.data.original_price;
     document.getElementById("tags").innerText = steamData.data.popular_tags;
-    */
 
     await renderFilteredGames(genre);
 
