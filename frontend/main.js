@@ -289,10 +289,8 @@ const renderGame = async(name) => {
     document.getElementById("desc").innerText = metacriticData["summary"];
     document.getElementById("price").innerText = steamData["original_price"];
     document.getElementById("tags").innerText = steamData["popular_tags"];
-    
-    //document.getElementById("gameName").innerText = 
-    
+
+    await axios.createElement
+
     return 0;
-
-
 }
