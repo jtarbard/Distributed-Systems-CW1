@@ -130,3 +130,97 @@ const renderNews = async(genre) => {
         document.getElementById('news').appendChild(descriptionP);
     }
 }
+
+// fetches steam data for a game via name
+const fetchSteam = async(name) => {
+    // the connection endpoint to fetch all genres
+    const fetchSteamOptions = {
+        method: 'GET',
+        url: 'http://localhost:7777/steam/'+name
+    };
+
+    var data = [];
+    var status = 200;
+
+    // sends the request and waits for a response
+    await axios.request(fetchSteamOptions).then(response => {
+      data = response.data;
+    }).catch(function (error) {
+        status = error.response.status;
+        console.error(error);
+    });
+    //TODO: NOT FOUND functionality
+  
+    return {data, status};
+}
+
+// fetches metacritic data for a game via name
+const fetchMetacritic = async(name) => {
+    // the connection endpoint to fetch all genres
+    const fetchMetacriticOptions = {
+        method: 'GET',
+        url: 'http://localhost:7777/metacritic/'+name
+    };
+
+    var data = [];
+    var status = 200;
+
+    // sends the request and waits for a response
+    await axios.request(fetchMetacriticOptions).then(response => {
+      data = response.data;
+    }).catch(function (error) {
+        status = error.response.status;
+        console.error(error);
+    });
+    //TODO: NOT FOUND functionality
+  
+    return {data, status};
+}
+
+// fetches client reviews for a game via name
+const fetchClient = async(name) => {
+    // the connection endpoint to fetch all genres
+    const fetchClientOptions = {
+        method: 'GET',
+        url: 'http://localhost:7777/client/'+name
+    };
+
+    var data = [];
+    var status = 200;
+
+    // sends the request and waits for a response
+    await axios.request(fetchClientOptions).then(response => {
+      data = response.data;
+    }).catch(function (error) {
+        status = error.response.status;
+        console.error(error);
+    });
+    //TODO: NOT FOUND functionality
+  
+    return {data, status};
+}
+
+// posts a client review by game name
+// fetches client reviews for a game via name
+const postClient = async(name) => {
+    // the connection endpoint to fetch all genres
+    const postClientOptions = {
+        method: 'POST',
+        url: 'http://localhost:7777/client/'+name,
+        args: {"user_id": user_id,"name": name,"comment": comment,"score": score,"date": date}
+    };
+
+    var data = [];
+    var status = 200;
+
+    // sends the request and waits for a response
+    await axios.post(postClientOptions).then(response => {
+      data = response.data;
+    }).catch(function (error) {
+        status = error.response.status;
+        console.error(error);
+    });
+    //TODO: NOT FOUND functionality
+  
+    return {data, status};
+}
