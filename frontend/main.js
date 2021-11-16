@@ -279,3 +279,20 @@ const postClient = async(name) => {
   
     return {data, status};
 }
+
+const renderGame = async(name) => {
+    steamData = await fetchSteam(name);
+    metacriticData = await fetchMetacritic(name);
+    clientData = await fetchClient(name);
+
+    document.getElementById("gameName").innerText = name;
+    document.getElementById("desc").innerText = metacriticData["summary"];
+    document.getElementById("price").innerText = steamData["original_price"];
+    document.getElementById("tags").innerText = steamData["popular_tags"];
+    
+    //document.getElementById("gameName").innerText = 
+    
+    return 0;
+
+
+}
