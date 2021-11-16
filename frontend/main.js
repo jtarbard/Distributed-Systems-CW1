@@ -55,6 +55,37 @@ const fetchNews = async(genre) => {
     return {data,status};
 }
 
+const fetchFilteredGames = async(genre) => {
+    const fetchFilteredGamesOptions = {
+        method: 'GET',
+        url: 'https://mmo-games.p.rapidapi.com/games',
+        params: {category: genre},
+        headers: {
+            'x-rapidapi-host': 'mmo-games.p.rapidapi.com',
+            'x-rapidapi-key': 'daa42aca34msh04b68d62611460dp193a8ejsn93d9f47b24c6'
+        }
+    };
+
+    // empty list initially
+    var data = [];
+    // OK status initially
+    var status = 200;
+
+    // sends the request and waits for a response
+    await axios.request(fetchFilteredGamesOptions).then(response => {
+        // populates the list with data received from request
+        data = response.data;
+        // IF BAD REQUEST or NOT FOUND
+      }).catch(function (error) {
+          // updates the status
+          status = error.response.status;
+          // shows the full error in the console
+          console.error(error);
+      });
+
+    return {data,status};
+}
+
 // change functionaity as needed to render the genres accordingly
 // change div id, target class and style as you find appropriate
 const renderGenres = async() => {
@@ -186,6 +217,42 @@ const renderGiveaways = async(genre) => {
     }
 }
 
+// change functionaity as needed to render the games accordingly
+// change div id, target class and style as you find appropriate
+const renderFilteredGames = async(genre) => {
+    response = await fetchFilteredGames(genre);
+    var games = response.data;
+
+    // handles NOT FOUND and BAD REQUEST errors by displaying useful message to users
+    if (games.length === 0) {
+            var titleHeader = document.createElement("h3");
+            titleHeader.innerText = "Oops! Something went wrong when connecting to our servers. Make sure you have a stable Internet connection or try again later.";
+            document.getElementById('games').appendChild(titleHeader);
+    }
+
+    // from the list of all genres
+    for (let i=0; i < games.length; i++) {
+        var divItem = document.createElement("div");
+
+        // create a header element
+        var gameLink = document.createElement("a");
+        // with text corresponding to the respective genre
+        gameLink.innerText = games[i].title;
+        // add the functionality to the button
+        gameLink.onclick = function () {
+            sessionStorage.setItem("selectedGame",games[i])
+            console.log(sessionStorage.getItem('selectedGame'));
+            //window.location.href = "reviews.html";
+        }
+
+        divItem.appendChild(gameLink);
+
+
+        // append to the HTML document, at id genres
+        document.getElementById('games').appendChild(divItem);
+    }
+}
+
 // fetches steam data for a game via name
 const fetchSteam = async(name) => {
     // the connection endpoint to fetch all genres
@@ -280,7 +347,9 @@ const postClient = async(name) => {
     return {data, status};
 }
 
-const renderGame = async(name) => {
+const renderGame = async(name,genre) => {
+
+    /*
     steamData = await fetchSteam(name);
     console.log(steamData);
     metacriticData = await fetchMetacritic(name);
@@ -292,7 +361,9 @@ const renderGame = async(name) => {
     document.getElementById("desc").innerText = metacriticData.data.summary;
     document.getElementById("price").innerText = steamData.data.original_price;
     document.getElementById("tags").innerText = steamData.data.popular_tags;
+    */
 
+    await renderFilteredGames(genre);
 
     return 0;
 }
