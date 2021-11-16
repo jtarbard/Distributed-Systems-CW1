@@ -18,6 +18,7 @@ def parse_metacritic():
     with open("resources/metacritic_games.csv") as csv_file:
         reader = csv.reader(csv_file, delimiter=',')
         metacritic_cols = next(reader)
+        metacritic_rows.clear()
         for row in reader:
             metacritic_rows.append(row)
 
@@ -28,6 +29,7 @@ def parse_steam():
     with open("resources/steam_games.csv", encoding="utf8") as csv_file:
         reader = csv.reader(csv_file, delimiter=',')
         steam_cols = next(reader)
+        steam_rows.clear()
         for row in reader:
             steam_rows.append(row)
 
@@ -37,10 +39,9 @@ def parse_client():
     with open("resources/client_games.csv") as csv_file:
         reader = csv.reader(csv_file, delimiter=",")
         client_cols = next(reader)
+        client_rows.clear()
         for row in reader:
             client_rows.append(row)
-    
-    print(client_rows)
 
 def parse_data():
     parse_metacritic()
@@ -90,15 +91,15 @@ def get_client_reviews_by_name(name):
 
     for row in client_rows:
         if row[client_name_index].lower() == name.lower():
-            tmp.append(row)
-    return zip(client_cols, tmp)
+            tmp.append(dict(zip(client_cols, row)))
+    
+    return tmp
 
 def post_client_review(user_id, name, comment, score):
     parse_client()
     try:
         client_rows.append(user_id, name, comment, score, datetime.now())
         new_row = [user_id, name, comment, score, datetime.now()]
-        print(client_rows, new_row)
         with open("Web API 3/resources/client_games.csv") as csv_file:
             writer = csv.writer(csv_file)
             writer.writerow(new_row)
@@ -106,25 +107,3 @@ def post_client_review(user_id, name, comment, score):
         return True
     except:
         return False
-
-# def put_client_review(review_id, user_id, comment, score):
-#     try:
-#         for row in client_rows:
-#             if row[client_review_id_index] == review_id and row[client_user_id_index] == user_id:
-#                 row[client_comment_index] = comment
-#                 row[cleint_score_index] = score
-#                 row[client_date_index] = datetime.now()
-#                 return True
-#         return False
-#     except:
-#         return False
-
-# def delete_client_review(review_id, user_id):
-#     try:
-#         for row in client_rows:
-#             if row[client_review_id_index] == review_id and row[client_user_id_index] == user_id:
-#                 row.remove()
-#                 return True
-#         return False
-#     except:
-#         return False

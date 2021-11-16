@@ -36,19 +36,16 @@ class client(Resource):
     def get(self, name):
         name = name.replace("_", " ")
         abort_if_name_doesnt_exist(name)
-        results =  data.get_client_reviews_by_name(name)
-        return dict(zip(data.client_cols, results))
+        return data.get_client_reviews_by_name(name)
 
     def post(self, name):
         args = client_parser.parse_args()
-        print("ARGS RECIEVED:", args["user_id"], name, args["comment"], args["score"])
         data.post_client_review(args["user_id"], name, args["comment"], args["score"])
-        return print(data.client_rows)
+        return data.client_rows[-1]
 
 api.add_resource(metacritic, '/metacritic/<name>', methods=["GET"], endpoint="metacritic")
 api.add_resource(steam, '/steam/<name>', methods=["GET"], endpoint="steam")
 api.add_resource(client, "/client/<name>", methods=["GET", "POST"], endpoint="client")
-
 
 # Run
 if __name__ == "__main__":
