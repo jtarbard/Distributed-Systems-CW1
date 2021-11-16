@@ -15,7 +15,7 @@ client_rows = []
 def parse_metacritic():
     global metacritic_cols, metacritic_rows
 
-    with open("Web API 3/resources/metacritic_games.csv") as csv_file:
+    with open("resources/metacritic_games.csv") as csv_file:
         reader = csv.reader(csv_file, delimiter=',')
         metacritic_cols = next(reader)
         for row in reader:
@@ -25,7 +25,7 @@ def parse_steam():
     global steam_cols, steam_rows
 
     # Parse steam CSV into storage
-    with open("Web API 3/resources/steam_games.csv") as csv_file:
+    with open("resources/steam_games.csv", encoding="utf8") as csv_file:
         reader = csv.reader(csv_file, delimiter=',')
         steam_cols = next(reader)
         for row in reader:
@@ -34,7 +34,7 @@ def parse_steam():
 def parse_client():
     global client_cols, client_rows
 
-    with open("Web API 3/resources/client_games.csv") as csv_file:
+    with open("resources/client_games.csv") as csv_file:
         reader = csv.reader(csv_file, delimiter=",")
         client_cols = next(reader)
         for row in reader:
