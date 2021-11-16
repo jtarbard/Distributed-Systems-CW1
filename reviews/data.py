@@ -86,6 +86,7 @@ def get_client_reviews_by_user_id_and_name(user_id, name):
 
 def get_client_reviews_by_name(name):
     parse_client()
+    print(client_rows)
     client_name_index = client_cols.index("name")
     tmp = []
 
@@ -93,7 +94,9 @@ def get_client_reviews_by_name(name):
         if row[client_name_index].lower() == name.lower():
             tmp.append(dict(zip(client_cols, row)))
     
-    return tmp
+    print(tmp)
+
+    return tmp[0]
 
 def post_client_review(user_id, name, comment, score):
     parse_client()

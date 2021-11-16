@@ -201,7 +201,7 @@ const fetchSteam = async(name) => {
     await axios.request(fetchSteamOptions).then(response => {
       data = response.data;
     }).catch(function (error) {
-        status = error.response.status;
+        status = 404;
         console.error(error);
     });
     //TODO: NOT FOUND functionality
@@ -224,7 +224,7 @@ const fetchMetacritic = async(name) => {
     await axios.request(fetchMetacriticOptions).then(response => {
       data = response.data;
     }).catch(function (error) {
-        status = error.response.status;
+        status = 404;
         console.error(error);
     });
     //TODO: NOT FOUND functionality
@@ -247,7 +247,7 @@ const fetchClient = async(name) => {
     await axios.request(fetchClientOptions).then(response => {
       data = response.data;
     }).catch(function (error) {
-        status = error.response.status;
+        status = 404;
         console.error(error);
     });
     //TODO: NOT FOUND functionality
@@ -272,7 +272,7 @@ const postClient = async(name) => {
     await axios.post(postClientOptions).then(response => {
       data = response.data;
     }).catch(function (error) {
-        status = error.response.status;
+        status = 404;
         console.error(error);
     });
     //TODO: NOT FOUND functionality
@@ -282,15 +282,17 @@ const postClient = async(name) => {
 
 const renderGame = async(name) => {
     steamData = await fetchSteam(name);
+    console.log(steamData);
     metacriticData = await fetchMetacritic(name);
+    console.log(metacriticData);
     clientData = await fetchClient(name);
+    console.log(clientData);
 
     document.getElementById("gameName").innerText = name;
-    document.getElementById("desc").innerText = metacriticData["summary"];
-    document.getElementById("price").innerText = steamData["original_price"];
-    document.getElementById("tags").innerText = steamData["popular_tags"];
+    document.getElementById("desc").innerText = metacriticData.data.summary;
+    document.getElementById("price").innerText = steamData.data.original_price;
+    document.getElementById("tags").innerText = steamData.data.popular_tags;
 
-    await axios.createElement
 
     return 0;
 }
