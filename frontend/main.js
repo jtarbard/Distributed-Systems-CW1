@@ -412,7 +412,15 @@ const renderGame = async() => {
     document.getElementById("price").innerText = steamData.data.original_price;
     document.getElementById("tags").innerText = steamData.data.popular_tags;
 
-    await renderFilteredGames(genre);
+    var reviews = document.getElementById("reviews")
+    var div = document.createElement("div")
+    div.classList = "col-12"
+
+    var p = document.createElement("p")
+    p.innerText = clientData.data.comment + " - " + clientData.data.score + "/10"
+
+    div.appendChild(p)
+    reviews.appendChild(div)
 
     return 0;
 }

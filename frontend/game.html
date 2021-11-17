@@ -11,41 +11,40 @@
   </head>
   <body onload="renderGame(sessionStorage.getItem('selectedGame').title, sessionStorage.getItem('selectedGame').main_image)">
 
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h2 id="gameName"></h2>
+    <div>
+        <h1 class="text-center p-5" id="gameName"></h1>
+    </div>
+    <div class="container d-flex h-100">
+        <div id="game" class="row">
+            <div class="col-12 col-lg-6 text-center">
+                <img id="cover">
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <img id="cover" src="">
-            </div>
-            <div class="col">
-                <p id="desc"></h3>
+            <div class="col-12 col-lg-6">
+                <h3>Description:</h3>
+                <p id="desc"></p>
+                <h3>Price</h3>
                 <p id="price"></p>
-                <ul id="tags">
-
+            </div>
+            <div class="col-12">
+                <h4>Tags</h4>
+                <p id="tags"></p>
+            </div>
+            <div class="col-12">
+                <h3>Reviews:</h3>
+                <ul id="reviews">
+                    
                 </ul>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <h3 id="client">Client: </h3>
-            </div>
-            <div class="col">
-                <h3 id="metacritic">Metacritic: </h3>
-            </div>
-            <div class="col">
-                <h3 id="steam">Steam: </h3>
-            </div>
-        </div>
-        <div class="row">
-            <ul id="reviews">
-
-            </ul>
-        </div>
     </div>
+    
+    <!-- <form onsubmit="postClient()"> -->
+        <!-- <div class="form-group w-50">
+            <label for="exampleFormControlTextarea1">Review</label>
+            <textarea class="form-control" id="user_review" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button> -->
+    <!-- </form> -->
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="main.js"></script>
