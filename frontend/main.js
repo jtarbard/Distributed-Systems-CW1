@@ -93,7 +93,7 @@ const renderIndex = async() => {
     
     news.onclick = function () {
         sessionStorage.setItem("selectedService", "news")
-        window.location.href = "news.html"
+        window.location.href = "genres.html"
     }
 
     games.onclick = function () {
@@ -103,7 +103,7 @@ const renderIndex = async() => {
 
     giveaways.onclick = function () {
         sessionStorage.setItem("selectedService", "giveaways")
-        window.location.href = "giveaways.html"
+        window.location.href = "genres.html"
     }
 }
 
