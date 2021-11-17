@@ -86,6 +86,37 @@ const fetchFilteredGames = async(genre) => {
     return {data,status};
 }
 
+// fetches only news that correspond to the specified genre 
+// (use only allowed values for genre, e.g. items from output of fetchGenres)
+const fetchGiveaways = async(genre) => {
+    const fetchGiveawaysOptions = {
+        method: 'GET',
+        url: 'http://localhost:8082/giveaways/filter',
+        // sets the genre parameter to the user selection(supplied as function argument)
+        params: {'genre': genre}
+    };
+
+    // empty list initially
+    var data = [];
+    // OK status initially
+    var status = 200;
+
+    // sends the request and waits for a response
+    await axios.request(fetchGiveawaysOptions).then(response => {
+        // populates the list with data received from request
+        data = response.data;
+        // IF BAD REQUEST or NOT FOUND
+      }).catch(function (error) {
+          // updates the status
+          status = error.response.status;
+          // shows the full error in the console
+          console.error(error);
+      });
+
+    return {data,status};
+}
+
+
 const renderIndex = async() => {
     var news = document.getElementById("news")
     var games = document.getElementById("games")
@@ -408,16 +439,37 @@ const renderGame = async() => {
 
     document.getElementById("gameName").innerText = sessionStorage.getItem("selectedGame");
     document.getElementById("cover").src = sessionStorage.getItem("gameThumbnail")
-    document.getElementById("desc").innerText = metacriticData.data.summary;
-    document.getElementById("price").innerText = steamData.data.original_price;
-    document.getElementById("tags").innerText = steamData.data.popular_tags;
+
+
+    if (metacriticData.data.summary === undefined) {
+        document.getElementById("desc").innerText = "No description available for this game";
+    } else {
+        document.getElementById("desc").innerText = metacriticData.data.summary;
+    }
+
+    if (steamData.data.original_price === undefined) {
+        document.getElementById("price").innerText = "No price available for this game";
+    } else {
+        document.getElementById("price").innerText = steamData.data.original_price;
+    }
+
+    if (steamData.data.popular_tags === undefined) {
+        document.getElementById("tags").innerText = "No tags available for this game";
+    } else {
+        document.getElementById("tags").innerText = steamData.data.popular_tags;
+    }
 
     var reviews = document.getElementById("reviews")
     var div = document.createElement("div")
     div.classList = "col-12"
 
     var p = document.createElement("p")
-    p.innerText = clientData.data.comment + " - " + clientData.data.score + "/10"
+    if (clientData.data.comment === undefined || clientData.data.score === undefined) {
+        p.innerText = "No user reviews available for this game."
+    }
+    else {
+        p.innerText = clientData.data.comment + " - " + clientData.data.score + "/10"
+    }
 
     div.appendChild(p)
     reviews.appendChild(div)
