@@ -273,25 +273,37 @@ const renderFilteredGames = async(genre) => {
     }
 
     // from the list of all genres
-    for (let i=0; i < games.length; i++) {
-        var divItem = document.createElement("div");
+    var pageTitle = document.getElementById("title")
+    pageTitle.innerText = genre + "Games"
 
-        // create a header element
-        var gameLink = document.createElement("a");
-        // with text corresponding to the respective genre
-        gameLink.innerText = games[i].title;
-        // add the functionality to the button
-        gameLink.onclick = function () {
-            sessionStorage.setItem("selectedGame",games[i])
-            console.log(sessionStorage.getItem('selectedGame'));
-            //window.location.href = "reviews.html";
+    // from the list of all genres
+    for (let i=0; i < games.length; i++) {
+
+        var col = document.createElement("div");
+        col.classList = "col-12 col-md-6";
+
+        var card = document.createElement("div");
+        card.classList = "card text-center";
+        card.onclick = function () {
+            sessionStorage.setItem("selectedGame", games[i].title)
+            sessionStorage.setItem("gameThumbnail", games[i].thumbnail)
+            console.log(games[i]) //REMOVE
+            window.location.href = "game"
         }
 
-        divItem.appendChild(gameLink);
+        var body = document.createElement("div");
+        body.classList = "card-body"
 
+        var title = document.createElement("h3");
+        title.classList = "card-title"
+        title.innerText = games[i].title
+
+        col.appendChild(card)
+        card.appendChild(body)
+        body.appendChild(title)
 
         // append to the HTML document, at id genres
-        document.getElementById('games').appendChild(divItem);
+        document.getElementById('games').appendChild(col);
     }
 }
 
