@@ -12,13 +12,9 @@ api = Api(app)
 
 data.parse_data()
 
-def abort_if_name_doesnt_exist(name):
-    return
-
 class metacritic(Resource):
     def get(self, name):
         name = name.replace("_", " ")
-        abort_if_name_doesnt_exist(name)
 
         response = make_response(dict(zip(data.metacritic_cols,  data.get_metacritic_by_name(name))))
         response.headers.add("Access-Control-Allow-Origin", "*")
@@ -28,7 +24,6 @@ class metacritic(Resource):
 class steam(Resource):
     def get(self, name):
         name = name.replace("_", " ")
-        abort_if_name_doesnt_exist(name)
 
         response = make_response(dict(zip( data.steam_cols,  data.get_steam_original_price_by_name(name))), 200)
         response.headers.add("Access-Control-Allow-Origin", "*")
@@ -44,7 +39,6 @@ class client(Resource):
 
     def get(self, name):
         name = name.replace("_", " ")
-        abort_if_name_doesnt_exist(name)
 
         response = make_response(data.get_client_reviews_by_name(name), 200)
         response.headers.add("Access-Control-Allow-Origin", "*")

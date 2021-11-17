@@ -287,8 +287,7 @@ const renderFilteredGames = async(genre) => {
         card.onclick = function () {
             sessionStorage.setItem("selectedGame", games[i].title)
             sessionStorage.setItem("gameThumbnail", games[i].thumbnail)
-            console.log(games[i]) //REMOVE
-            window.location.href = "game"
+            window.location.href = "game.html"
         }
 
         var body = document.createElement("div");
@@ -401,17 +400,14 @@ const postClient = async(name) => {
     return {data, status};
 }
 
-const renderGame = async(name, img) => {
+const renderGame = async() => {
 
-    steamData = await fetchSteam(name);
-    console.log(steamData);
-    metacriticData = await fetchMetacritic(name);
-    console.log(metacriticData);
-    clientData = await fetchClient(name);
-    console.log(clientData);
+    steamData = await fetchSteam(sessionStorage.getItem("selectedGame"));
+    metacriticData = await fetchMetacritic(sessionStorage.getItem("selectedGame"));
+    clientData = await fetchClient(sessionStorage.getItem("selectedGame"));
 
-    document.getElementById("gameName").innerText = name;
-    document.getElementById("cover").src = img
+    document.getElementById("gameName").innerText = sessionStorage.getItem("selectedGame");
+    document.getElementById("cover").src = sessionStorage.getItem("gameThumbnail")
     document.getElementById("desc").innerText = metacriticData.data.summary;
     document.getElementById("price").innerText = steamData.data.original_price;
     document.getElementById("tags").innerText = steamData.data.popular_tags;
