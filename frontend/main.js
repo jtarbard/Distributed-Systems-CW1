@@ -86,6 +86,27 @@ const fetchFilteredGames = async(genre) => {
     return {data,status};
 }
 
+const renderIndex = async() => {
+    var news = document.getElementById("news")
+    var games = document.getElementById("games")
+    var giveaways = document.getElementById("giveaways")
+    
+    news.onclick = function () {
+        sessionStorage.setItem("selectedService", "news")
+        window.location.href = "news.html"
+    }
+
+    games.onclick = function () {
+        sessionStorage.setItem("selectedService", "games")
+        window.location.href = "genres.html"
+    }
+
+    giveaways.onclick = function () {
+        sessionStorage.setItem("selectedService", "giveaways")
+        window.location.href = "giveaways.html"
+    }
+}
+
 // change functionaity as needed to render the genres accordingly
 // change div id, target class and style as you find appropriate
 const renderGenres = async() => {
@@ -108,22 +129,35 @@ const renderGenres = async() => {
 
     // from the list of all genres
     for (let i=0; i < genres.length; i++) {
-        var divItem = document.createElement("div");
+        var col = document.createElement("div");
+        col.classList = "col-6 col-md-3";
 
-        // create a header element
-        var genreLink = document.createElement("a");
-        // with text corresponding to the respective genre
-        genreLink.innerText = genres[i];
-        // add the functionality to the button
-        genreLink.onclick = function () {
-            sessionStorage.setItem("selectedGenre",genres[i])
-            window.location.href = "news.html";
+        var card = document.createElement("div");
+        card.classList = "card text-center";
+        card.onclick = function () {
+            sessionStorage.setItem("selectedGenre", genres[i]);
+            if (sessionStorage.getItem("selectedService") == "news"){
+                window.location.href = "news.html";
+            } else if (sessionStorage.getItem("selectedService") == "games"){
+                window.location.href = "games.html";
+            } else if (sessionStorage.getItem("selectedService") == "giveaways"){
+                window.location.href = "giveaways.html";
+            };
         }
 
-        divItem.appendChild(genreLink);
+        var body = document.createElement("div");
+        body.classList = "card-body"
+
+        var title = document.createElement("h3");
+        title.classList = "card-title"
+        title.innerText = genres[i]
+
+        col.appendChild(card)
+        card.appendChild(body)
+        body.appendChild(title)
 
         // append to the HTML document, at id genres
-        document.getElementById('genres').appendChild(divItem);
+        document.getElementById('genres').appendChild(col);
     }
 }
 
@@ -147,26 +181,34 @@ const renderNews = async(genre) => {
     
     // for each news in the list
     for (let i=0; i < news.length; i++) {
-        // defines HTML element containing the news title
-        title = news[i].title;
-        var titleHeader = document.createElement("h3");
-        titleHeader.innerText = title;
 
-        // defines HTML element containing the news image
-        imageUrl = news[i].main_image;
-        var img = new Image();
-        img.src = imageUrl;
+        var col = document.createElement("div");
+        col.classList = "col-12 ";
 
-        // defines HTML element containing short description of the news
-        articleContent = news[i].article_content;
-        var descriptionP = document.createElement("div");
-        descriptionP.innerHTML = articleContent;
+        var card = document.createElement("div");
+        card.classList = "card text-center p-5";
 
-        // appends to the specified element with id='news' in the order:
-        // TITLE followed by IMAGE followed by DESCRIPTION
-        document.getElementById('news').appendChild(titleHeader);
-        document.getElementById('news').appendChild(img);
-        document.getElementById('news').appendChild(descriptionP);
+        var body = document.createElement("div");
+        body.classList = "card-body"
+
+        var img = document.createElement("img");
+        img.classList = "card-img-top"
+        img.src = news[i].main_image;
+
+        var title = document.createElement("h3");
+        title.classList = "card-title"
+        title.innerText = news[i].title;
+
+        var content = document.createElement("p");
+
+        col.appendChild(card)
+        card.appendChild(body)
+        body.appendChild(img)
+        body.appendChild(title)
+        body.appendChild(content)
+
+        // append to the HTML document, at id genres
+        document.getElementById('genres').appendChild(col);
     }
 }
 
