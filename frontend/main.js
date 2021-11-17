@@ -208,7 +208,7 @@ const renderNews = async(genre) => {
         body.appendChild(content)
 
         // append to the HTML document, at id genres
-        document.getElementById('genres').appendChild(col);
+        document.getElementById('news').appendChild(col);
     }
 }
 
